@@ -141,8 +141,8 @@ class Parsible(object):
                 if self.batch:
                     self.logger.debug('Ending Batch Run')
                     raise StopIteration
-                if self.debug:
-                    self.logger.debug('Tick Tock, waited for {} iterations'.format(empty_iterations))
+                #if self.debug:
+                    #self.logger.debug('Tick Tock, waited for {} iterations'.format(empty_iterations))
                 # Essentially spinlock on our logfile waiting for updates to become available
                 # Depending on update speed this iteration time can be decreased
                 empty_iterations += 1
