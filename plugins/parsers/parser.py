@@ -1,6 +1,7 @@
 import re
+import logging
 
-debugOn = False
+logger = logging.getLogger('parsible')
 
 def parse_parser(line):
     result_set = {}
@@ -19,7 +20,7 @@ def parse_parser(line):
         result_set["soeTimestamp"] = getValue(cs[8])
         result_set["time_stamp"] = getValue(cs[9])
     else:
-        debug (line)
+        logger.debug(line)
     return result_set
 
 def getValue(pair): 
@@ -27,8 +28,5 @@ def getValue(pair):
    if len(nv) == 2:
         return nv[1]
    else:
-       debug(pair)
+       logger.debug(pair)
   
-def debug(message):
-   if debugOn:
-     print(message)
