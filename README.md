@@ -2,8 +2,17 @@
 
 Parsible + CA APM plugins
 
+Tested on python 2.6
+
+requires the following python modules
+
 ```
-python parsible.py --log-file ../log/newlog.log --pid-file /tmp/parsible.pid --parser parse_sony -d True
+easy_install argparse
+easy_install requests
+```
+
+```
+python parsible.py --log-file ../log/newlog.log --pid-file /tmp/parsible.pid --parser parse_parser -d True
 ```
 
 A tool to help you parse your log files, written in [Python](http://http://python.org/).  The goal was to make a tool that will do the grunt work of following your logs in realtime, and to be easily be extended via plugins. Check out our tech blog post on why we wanted Parsible [here]()http://tech.yipit.com/2012/08/03/parsible-straightforward-log-parsing/.
