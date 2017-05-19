@@ -12,5 +12,5 @@ def process_line(line):
     mb.addMetric('IntCounter', metricBasePath + ':LAST',line["LAST"])
     mb.addMetric('IntCounter', metricBasePath + ':LOW', line["LOW"])
     mb.addMetric('IntCounter', metricBasePath + ':HIGH',line["HIGH"])
-    mb.addMetric('StringEvent', "LogMetrics|running","running")
+    mb.addMetric('StringEvent', "LogMetrics|running:running","running")
     mb.sendMetrics()
