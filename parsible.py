@@ -44,8 +44,9 @@ class Parsible(object):
                                 self.processors.append(getattr(_temp, method))
 
     def set_logging(self):
-        logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s - %(message)s')
-        logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(asctime)s - %(message)s')
+        logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s - %(message)s', filename='../logs/parsinator.log')
+        logging.basicConfig(level=logging.ERROR, format='[%(levelname)s] %(asctime)s - %(message)s', filename='../logs/parsinator.log')
+        logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(asctime)s - %(message)s', filename='../logs/parsinator.log')
         self.logger = logging.getLogger('parsible')
         if self.debug:
             self.logger.setLevel(logging.DEBUG)

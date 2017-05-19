@@ -1,6 +1,7 @@
 import requests
 import json
 import logging
+import sys
 
 logger = logging.getLogger('parsible')
 # configure URL and header for RESTful submission
@@ -12,6 +13,7 @@ class metricBatch(object):
 
     def __init__(self):
         self.metricDict = {'metrics' : []}
+        logging.getLogger("requests").setLevel(logging.WARNING)
 
     # add a metric to the dictionary
     # param metricDict: container for sending metrics to EPAgent
@@ -27,22 +29,20 @@ class metricBatch(object):
 
      # json package.  Post resulting message to EPAgent RESTful
      # interface.
-    def sendMetrics(self, verbose):
+    def sendMetrics(self):
         try:
             logger.debug(json.dumps(self.metricDict, sort_keys=True, indent=4, separators=(',', ': ')))
             r = requests.post(url, data = json.dumps(self.metricDict),
                               headers = headers)
         except requests.ConnectionError as err:
-            print("Unable to connect to EPAgent via URL \"{}\": {}\ncheck httpServerPort and that EPAgent is running!".format(url, err))
+            logger.error("Unable to connect to EPAgent via URL %s : %s\ncheck httpServerPort and that EPAgent is running!"%(url, err))
             sys.exit(1)
 
-        if verbose == True:
-            #print("jsonDump:")
-            #print(json.dumps(metricDict, indent = 4))
+        if logging.getLogger('parsible').isEnabledFor(logging.DEBUG):
 
-            print("Response:")
+            logger.debug("Response:")
             response = json.loads(r.text)
-            print(json.dumps(response, indent = 4))
+            logger.debug(json.dumps(response, indent = 4))
 
-            print("StatusCode: {0}".format(r.status_code))
+            logger.debug("StatusCode: {0}".format(r.status_code))
 

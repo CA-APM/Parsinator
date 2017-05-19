@@ -1,4 +1,7 @@
 from plugins.outputs.ca_apm_rest import metricBatch
+import logging
+
+logger = logging.getLogger('parsible')
 
 def process_line(line):
     
@@ -9,4 +12,5 @@ def process_line(line):
     mb.addMetric('IntCounter', metricBasePath + ':LAST',line["LAST"])
     mb.addMetric('IntCounter', metricBasePath + ':LOW', line["LOW"])
     mb.addMetric('IntCounter', metricBasePath + ':HIGH',line["HIGH"])
-    mb.sendMetrics(False)
+    mb.addMetric('StringEvent', "LogMetrics|running","running")
+    mb.sendMetrics()
