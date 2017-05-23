@@ -44,6 +44,17 @@ cd epaplugins
 git clone https://github.com/DuaneNielsen/Parsinator
 ```
 
+then update the following properties in EPAgent profile
+
+```
+introscope.epagent.config.httpServerPort=8083
+introscope.epagent.plugins.stateful.names=parsinator
+introscope.epagent.stateful.parsinator.command=python ../epaplugins/Parsinator/parsible.py --log-file /home/ca/log/newlog.log --pid-file /tmp/parsible.pid --parser parse_parser -d True
+```
+
+replace /home/ca/log/newlog.log with the logfile you want to monitor
+
+logs will be written to <epagent>/logs/parsinator.log
 
 
 #### to run from commmand line in debug mode
