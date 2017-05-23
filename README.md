@@ -4,19 +4,22 @@ Parsible + CA APM plugins
 
 Tested on python 2.6
 
-requires the following python modules
+to install on an offline machine without root
 
-```
-easy_install argparse
-easy_install requests
-```
+you will need to have both python 2.6+ and pip installed on the machine
 
-to install, first install EPAgent then
+install EPAgent
+download Parsinator using the "Clone or Download" option on github
+upload Parsinator-master.zip to /tmp
 
 ```
 cd <your epagent base directory>
 cd epaplugins
-git clone https://github.com/DuaneNielsen/Parsinator
+unzip /tmp/Parsinator-master.zip .
+mv Parsinator-master Parsinator
+cd Parsinator
+pip install --user ./requests-2.14.2.tar.gz
+pip install --user ./argparse-1.4.0.tar.gz
 ```
 
 then update the following properties in EPAgent profile
@@ -26,9 +29,22 @@ introscope.epagent.config.httpServerPort=8083
 introscope.epagent.plugins.stateful.names=parsinator
 introscope.epagent.stateful.parsinator.command=python ../epaplugins/Parsinator/parsible.py --log-file /home/ca/log/newlog.log --pid-file /tmp/parsible.pid --parser parse_parser -d True
 ```
+
 replace /home/ca/log/newlog.log with the logfile you want to monitor
 
 logs will be written to <epagent>/logs/parsinator.log
+
+online install with root permissions
+
+```
+easy_install argparse
+easy_install requests
+cd <your epagent base directory>
+cd epaplugins
+git clone https://github.com/DuaneNielsen/Parsinator
+```
+
+
 
 to run from commmand line in debug mode
 
@@ -39,6 +55,7 @@ cd bin
 python ../epaplugins/Parsinator/parsible.py --log-file /home/ca/log/newlog.log --pid-file /tmp/parsible.pid --parser parse_parser -d True
 ```
 the paths are all relative, so you have to run it specifically from the epagent/bin directory, or it might not work
+
 
 A tool to help you parse your log files, written in [Python](http://http://python.org/).  The goal was to make a tool that will do the grunt work of following your logs in realtime, and to be easily be extended via plugins. Check out our tech blog post on why we wanted Parsible [here]()http://tech.yipit.com/2012/08/03/parsible-straightforward-log-parsing/.
 
