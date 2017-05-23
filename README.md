@@ -4,7 +4,7 @@ Parsible + CA APM plugins
 
 Tested on python 2.6
 
-####to install on an offline machine without root
+####to install on an offline machine without root####
 
 you will need to have both python 2.6+ and pip installed on the machine
 
@@ -34,7 +34,7 @@ replace /home/ca/log/newlog.log with the logfile you want to monitor
 
 logs will be written to <epagent>/logs/parsinator.log
 
-####online install with root permissions
+####online install with root permissions####
 
 ```
 easy_install argparse
@@ -46,7 +46,7 @@ git clone https://github.com/DuaneNielsen/Parsinator
 
 
 
-####to run from commmand line in debug mode
+####to run from commmand line in debug mode####
 
 ```
 cd <epagent directory>
