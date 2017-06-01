@@ -52,6 +52,7 @@ class Parsible(object):
             self.logger.setLevel(logging.DEBUG)
         else:
             self.logger.setLevel(logging.INFO)
+        self.logger.info("logging initialized")
 
 
     def __init__(self, input_file, parser, pid_file, debug, batch, auto_reload):
@@ -179,23 +180,31 @@ class Parsible(object):
                 continue
 
     def main(self):
-        # Being a good UNIX Citizen
-        self.set_pid_file()
-        self.load_file()
+        try:
+            # Being a good UNIX Citizen
+            self.set_pid_file()
+            self.load_file()
 
-        # Get our Generator Reference
-        parsed_log_file = self.follow()
+            # Get our Generator Reference
+            parsed_log_file = self.follow()
 
-        # Abstract all the messy generator logic away into a simple for-each
-        for parsed_line in parsed_log_file:
-            # The processors should take care of outputting data as they see fit
-            if self.debug:
-                self.logger.debug(parsed_line)
-            self.run_processors(parsed_line)
+            # Abstract all the messy generator logic away into a simple for-each
+            for parsed_line in parsed_log_file:
+                # The processors should take care of outputting data as they see fit
+                if self.debug:
+                    self.logger.debug(parsed_line)
+                self.run_processors(parsed_line)
 
-        # We probably will never reach here, but it pays to be tidy just in case we change code in the future
-        self.log_file.close()
-        self.parsible_exit(0)
+            # We probably will never reach here, but it pays to be tidy just in case we change code in the future
+            self.log_file.close()
+            self.parsible_exit(0)
+
+        except Exception(e):
+            # for certain we will reach here at some point!
+            self.logger.error("caught exception, shutting down")
+            self.logger.error(e)
+            self.log_file.close()
+            self.parsible_exit(0)
 
 if __name__ == '__main__':
 
