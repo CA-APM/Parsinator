@@ -1,5 +1,5 @@
-#!/bin/python
-import sys, time, os, signal, imp, argparse, logging, traceback
+#!/usr/bin/python
+import sys, time, os, signal, imp, argparse, logging, logging.handlers, traceback
 
 class Parsible(object):
     def import_plugins(self):
@@ -44,15 +44,17 @@ class Parsible(object):
                                 self.processors.append(getattr(_temp, method))
 
     def set_logging(self):
-        logging.basicConfig(level=logging.DEBUG, format='[%(levelname)s] %(asctime)s - %(message)s', filename='../logs/parsinator.log')
-        logging.basicConfig(level=logging.ERROR, format='[%(levelname)s] %(asctime)s - %(message)s', filename='../logs/parsinator.log')
-        logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(asctime)s - %(message)s', filename='../logs/parsinator.log')
         self.logger = logging.getLogger('parsible')
+        handler = logging.handlers.RotatingFileHandler('../logs/parsinator.log', mode='a', maxBytes=2*10**7, backupCount=1)
+        handler.setFormatter(logging.Formatter('[%(levelname)s] %(asctime)s - %(message)s'))
+        self.logger.addHandler(handler)
+      
         if self.debug:
             self.logger.setLevel(logging.DEBUG)
         else:
             self.logger.setLevel(logging.INFO)
         self.logger.info("logging initialized")
+        self.logger.debug("logging set to DEBUG")
 
 
     def __init__(self, input_file, parser, pid_file, debug, batch, auto_reload):
